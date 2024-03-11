@@ -1,14 +1,11 @@
 #pragma once
 
 #include <cstdint>
-#include <vector>
-
-#include "Peg.h"
+#include <deque>
 
 class Hanoi {
     public:
-        Hanoi(std::uint64_t numPegs,
-              std::uint64_t numDisks);
+        Hanoi(std::uint64_t numDisks);
 
         ~Hanoi();
 
@@ -18,11 +15,15 @@ class Hanoi {
 
         void print();
 
+        bool swap(std::deque<std::uint64_t>& first,
+                  std::deque<std::uint64_t>& second);
+
     private:
-        std::uint64_t numPegs;
         std::uint64_t numDisks;
 
-        std::vector<Peg*> pegs;
+        std::deque<std::uint64_t> a;
+        std::deque<std::uint64_t> b;
+        std::deque<std::uint64_t> c;
 
         std::uint64_t numSteps;
 };

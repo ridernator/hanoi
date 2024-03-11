@@ -2,70 +2,127 @@
 #include <iostream>
 #include <string>
 
-Hanoi::Hanoi(std::uint64_t numPegs,
-             std::uint64_t numDisks) : numPegs(numPegs),
-                                       numDisks(numDisks),
+Hanoi::Hanoi(std::uint64_t numDisks) : numDisks(numDisks),
                                        numSteps(0) {
-
-    // Create pegs
-    for (std::uint64_t index = 0; index < numPegs; ++index) {
-        pegs.push_back(new Peg());
-    }
 
     // Populate first peg
     for (std::uint64_t disk = numDisks; disk != 0; --disk) {
-        pegs[0]->addDisk(new Disk(disk));
+        a.push_back(disk);
     }
 }
 
 Hanoi::~Hanoi() {
-    for (auto peg : pegs) {
-        delete peg;
-    }
 }
 
 void Hanoi::solve() {
+    print();
+
     while (!isSovled()) {
-        // A <--> B
-        if (pegs[0]->getTopWidth() < pegs[1]->getTopWidth()) {
-            pegs[1]->addDisk(pegs[0]->removeDisk());
+        if (numDisks % 2 == 1) {
+            // A <--> C
+            if (!swap(a, c)) {
+                break;
+            }
+
+            print();
+
+            // A <--> B
+            if (!swap(a, b)) {
+                break;
+            }
+
+            print();
+
+            // B <--> C
+            if (!swap(b, c)) {
+                break;
+            }
+
+            print();
         } else {
-            pegs[0]->addDisk(pegs[1]->removeDisk());
+            // A <--> B
+            if (!swap(a, b)) {
+                break;
+            }
+
+            print();
+
+            // A <--> C
+            if (!swap(a, c)) {
+                break;
+            }
+
+            print();
+
+            // B <--> C
+            if (!swap(b, c)) {
+                break;
+            }
+
+            print();
         }
-
-        // A <--> C
-        if (pegs[0]->getTopWidth() < pegs[2]->getTopWidth()) {
-            pegs[2]->addDisk(pegs[0]->removeDisk());
-        } else {
-            pegs[0]->addDisk(pegs[2]->removeDisk());
-        }
-
-        // B <--> C
-        if (pegs[1]->getTopWidth() < pegs[2]->getTopWidth()) {
-            pegs[2]->addDisk(pegs[1]->removeDisk());
-        } else {
-            pegs[1]->addDisk(pegs[2]->removeDisk());
-        }
-
-        numSteps += 3;
-
-        print();
     }
 
     std::cout << "Took " << numSteps << " steps" << std::endl;
 }
 
 bool Hanoi::isSovled() {
-    return (pegs[0]->empty() && pegs[1]->empty());
+    return (a.empty() && b.empty());
+}
+
+bool Hanoi::swap(std::deque<std::uint64_t>& first,
+                 std::deque<std::uint64_t>& second) {
+    if ((first.empty()) && (second.empty())) {
+        return false;
+    }
+
+    if (isSovled()) {
+        return false;
+    }
+
+    if (first.empty()) {
+        first.push_back(second.back());
+        second.pop_back();
+    } else if (second.empty()) {
+        second.push_back(first.back());
+        first.pop_back();
+    } else {
+        if (first.back() < second.back()) {
+            second.push_back(first.back());
+            first.pop_back();
+        } else {
+            first.push_back(second.back());
+            second.pop_back();
+        }
+    }
+
+    ++numSteps;
+
+    return true;
 }
 
 void Hanoi::print() {
-
+    // std::cout << "-----------------------------" << std::endl;
+    //
+    // for (std::uint64_t disk : a) {
+    //     std::cout << disk << "-";
+    // }
+    // std::cout << std::endl;
+    //
+    // for (std::uint64_t disk : b) {
+    //     std::cout << disk << "-";
+    // }
+    // std::cout << std::endl;
+    //
+    // for (std::uint64_t disk : c) {
+    //     std::cout << disk << "-";
+    // }
+    // std::cout << std::endl;
 }
 
 int main(const int,
          const char** argc) {
-    Hanoi hanoi(3, std::stoi(*(argc + 1)));
+    Hanoi hanoi(std::stoi(*(argc + 1)));
 
     hanoi.solve();
 }
