@@ -1,13 +1,13 @@
 #include "Hanoi.h"
+
 #include <iostream>
-#include <string>
 
 Hanoi::Hanoi(std::uint64_t numDisks) : numDisks(numDisks),
                                        numSteps(0) {
 
     // Populate first peg
     for (std::uint64_t disk = numDisks; disk != 0; --disk) {
-        a.push_back(disk);
+        a.push(disk);
     }
 }
 
@@ -70,8 +70,8 @@ bool Hanoi::isSovled() {
     return (a.empty() && b.empty());
 }
 
-bool Hanoi::swap(std::deque<std::uint64_t>& first,
-                 std::deque<std::uint64_t>& second) {
+bool Hanoi::swap(std::stack<std::uint64_t, std::vector<std::uint64_t>>& first,
+                 std::stack<std::uint64_t, std::vector<std::uint64_t>>& second) {
     if ((first.empty()) && (second.empty())) {
         return false;
     }
@@ -81,18 +81,18 @@ bool Hanoi::swap(std::deque<std::uint64_t>& first,
     }
 
     if (first.empty()) {
-        first.push_back(second.back());
-        second.pop_back();
+        first.push(second.top());
+        second.pop();
     } else if (second.empty()) {
-        second.push_back(first.back());
-        first.pop_back();
+        second.push(first.top());
+        first.pop();
     } else {
-        if (first.back() < second.back()) {
-            second.push_back(first.back());
-            first.pop_back();
+        if (first.top() < second.top()) {
+            second.push(first.top());
+            first.pop();
         } else {
-            first.push_back(second.back());
-            second.pop_back();
+            first.push(second.top());
+            second.pop();
         }
     }
 
