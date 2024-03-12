@@ -4,63 +4,45 @@
 
 Hanoi::Hanoi(std::uint64_t numDisks) : numDisks(numDisks),
                                        numSteps(0) {
-
     // Populate first peg
     for (std::uint64_t disk = numDisks; disk != 0; --disk) {
         a.push(disk);
     }
 }
 
-Hanoi::~Hanoi() {
-}
-
 void Hanoi::solve() {
+    auto& peg1 = a;
+    auto& peg2 = b;
+    auto& peg3 = c;
+
+    if (numDisks % 2 == 1) {
+        peg2 = c;
+        peg3 = b;
+    }
+
     print();
 
     while (!isSovled()) {
-        if (numDisks % 2 == 1) {
-            // A <--> C
-            if (!swap(a, c)) {
-                break;
-            }
-
-            print();
-
-            // A <--> B
-            if (!swap(a, b)) {
-                break;
-            }
-
-            print();
-
-            // B <--> C
-            if (!swap(b, c)) {
-                break;
-            }
-
-            print();
-        } else {
-            // A <--> B
-            if (!swap(a, b)) {
-                break;
-            }
-
-            print();
-
-            // A <--> C
-            if (!swap(a, c)) {
-                break;
-            }
-
-            print();
-
-            // B <--> C
-            if (!swap(b, c)) {
-                break;
-            }
-
-            print();
+        // 1 <--> 2
+        if (!swap(peg1, peg2)) {
+            break;
         }
+
+        print();
+
+        // 1 <--> 3
+        if (!swap(peg1, peg3)) {
+            break;
+        }
+
+        print();
+
+        // 2 <--> 3
+        if (!swap(peg2, peg3)) {
+            break;
+        }
+
+        print();
     }
 
     std::cout << "Took " << numSteps << " steps" << std::endl;

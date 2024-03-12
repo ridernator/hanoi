@@ -8,8 +8,6 @@ class Hanoi {
     public:
         Hanoi(std::uint64_t numDisks);
 
-        ~Hanoi();
-
         void solve();
 
         bool isSovled();
