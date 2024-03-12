@@ -2,8 +2,8 @@
 
 #include <iostream>
 
-Hanoi::Hanoi(std::uint64_t numDisks) : numDisks(numDisks),
-                                       numSteps(0) {
+Hanoi::Hanoi(std::uint_fast8_t numDisks) : numDisks(numDisks),
+                                           numSteps(0) {
     // Populate first peg
     for (std::uint64_t disk = numDisks; disk != 0; --disk) {
         a.push(disk);
@@ -52,8 +52,8 @@ bool Hanoi::isSovled() {
     return (a.empty() && b.empty());
 }
 
-bool Hanoi::swap(std::stack<std::uint64_t, std::vector<std::uint64_t>>& first,
-                 std::stack<std::uint64_t, std::vector<std::uint64_t>>& second) {
+bool Hanoi::swap(std::stack<std::uint_fast8_t, std::vector<std::uint_fast8_t>>& first,
+                 std::stack<std::uint_fast8_t, std::vector<std::uint_fast8_t>>& second) {
     if ((first.empty()) && (second.empty())) {
         return false;
     }
