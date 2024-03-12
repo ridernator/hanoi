@@ -1,11 +1,12 @@
 #include "Hanoi.h"
 
+#include <cstdlib>
 #include <iostream>
 
 Hanoi::Hanoi(std::uint_fast8_t numDisks) : numDisks(numDisks),
                                            numSteps(0) {
     // Populate first peg
-    for (std::uint64_t disk = numDisks; disk != 0; --disk) {
+    for (auto disk = numDisks; disk != 0; --disk) {
         a.push(disk);
     }
 }
@@ -102,9 +103,15 @@ void Hanoi::print() {
     // std::cout << std::endl;
 }
 
-int main(const int,
-         const char** argc) {
-    Hanoi hanoi(std::stoi(*(argc + 1)));
+int main(const int    argc,
+         const char** argv) {
+    if (argc != 2) {
+        std::cerr << "Usage hanoi <numberOfDisks>" << std::endl;
+
+        std::exit(EXIT_FAILURE);
+    }
+
+    Hanoi hanoi(std::stoi(*(argv + 1)));
 
     hanoi.solve();
 }
