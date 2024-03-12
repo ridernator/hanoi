@@ -1,7 +1,8 @@
 #pragma once
 
 #include <cstdint>
-#include <deque>
+#include <vector>
+#include <stack>
 
 class Hanoi {
     public:
@@ -15,15 +16,15 @@ class Hanoi {
 
         void print();
 
-        bool swap(std::deque<std::uint64_t>& first,
-                  std::deque<std::uint64_t>& second);
+        bool swap(std::stack<std::uint64_t, std::vector<std::uint64_t>>& first,
+                  std::stack<std::uint64_t, std::vector<std::uint64_t>>& second);
 
     private:
         std::uint64_t numDisks;
 
-        std::deque<std::uint64_t> a;
-        std::deque<std::uint64_t> b;
-        std::deque<std::uint64_t> c;
+        std::stack<std::uint64_t, std::vector<std::uint64_t>> a;
+        std::stack<std::uint64_t, std::vector<std::uint64_t>> b;
+        std::stack<std::uint64_t, std::vector<std::uint64_t>> c;
 
         std::uint64_t numSteps;
 };
