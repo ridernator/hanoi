@@ -12,8 +12,6 @@ class Hanoi {
 
         bool isSovled();
 
-        void print();
-
         bool swap(std::stack<std::uint_fast8_t, std::vector<std::uint_fast8_t>>& first,
                   std::stack<std::uint_fast8_t, std::vector<std::uint_fast8_t>>& second);
 

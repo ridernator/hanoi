@@ -1,5 +1,6 @@
 #include "Hanoi.h"
 
+#include <cstdint>
 #include <cstdlib>
 #include <iostream>
 
@@ -21,29 +22,21 @@ void Hanoi::solve() {
         peg3 = b;
     }
 
-    print();
-
     while (!isSovled()) {
         // 1 <--> 2
         if (!swap(peg1, peg2)) {
             break;
         }
 
-        print();
-
         // 1 <--> 3
         if (!swap(peg1, peg3)) {
             break;
         }
 
-        print();
-
         // 2 <--> 3
         if (!swap(peg2, peg3)) {
             break;
         }
-
-        print();
     }
 
     std::cout << "Took " << numSteps << " steps" << std::endl;
@@ -82,25 +75,6 @@ bool Hanoi::swap(std::stack<std::uint_fast8_t, std::vector<std::uint_fast8_t>>& 
     ++numSteps;
 
     return true;
-}
-
-void Hanoi::print() {
-    // std::cout << "-----------------------------" << std::endl;
-    //
-    // for (std::uint64_t disk : a) {
-    //     std::cout << disk << "-";
-    // }
-    // std::cout << std::endl;
-    //
-    // for (std::uint64_t disk : b) {
-    //     std::cout << disk << "-";
-    // }
-    // std::cout << std::endl;
-    //
-    // for (std::uint64_t disk : c) {
-    //     std::cout << disk << "-";
-    // }
-    // std::cout << std::endl;
 }
 
 int main(const int    argc,
