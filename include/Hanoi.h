@@ -2,7 +2,6 @@
 
 #include <cstdint>
 #include <vector>
-#include <stack>
 
 class Hanoi {
     public:
@@ -10,17 +9,16 @@ class Hanoi {
 
         void solve();
 
-        bool isSovled();
+        bool swap(std::vector<std::uint_fast8_t>* first,
+                  std::vector<std::uint_fast8_t>* second);
 
-        bool swap(std::stack<std::uint_fast8_t, std::vector<std::uint_fast8_t>>& first,
-                  std::stack<std::uint_fast8_t, std::vector<std::uint_fast8_t>>& second);
-
+        void print();
     private:
         std::uint64_t numDisks;
 
-        std::stack<std::uint_fast8_t, std::vector<std::uint_fast8_t>> a;
-        std::stack<std::uint_fast8_t, std::vector<std::uint_fast8_t>> b;
-        std::stack<std::uint_fast8_t, std::vector<std::uint_fast8_t>> c;
+        std::vector<std::uint_fast8_t> a;
+        std::vector<std::uint_fast8_t> b;
+        std::vector<std::uint_fast8_t> c;
 
         std::uint64_t numSteps;
 };
