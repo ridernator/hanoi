@@ -2,9 +2,10 @@
 
 #include <cstdint>
 #include <cstdlib>
+#include <iomanip>
 #include <iostream>
 
-// #define PRINT
+#define PRINT
 
 Hanoi::Hanoi(std::uint_fast8_t numDisks) : numDisks(numDisks),
                                            aTop(numDisks - 1),
@@ -22,37 +23,37 @@ void Hanoi::solve() {
     auto* peg1 = a;
     auto* peg2 = b;
     auto* peg3 = c;
-    auto& peg1Top = aTop;
-    auto& peg2Top = bTop;
-    auto& peg3Top = cTop;
+    auto* peg1Top = &aTop;
+    auto* peg2Top = &bTop;
+    auto* peg3Top = &cTop;
 
     if (numDisks % 2 != 0) {
         peg2 = c;
         peg3 = b;
 
-        peg2Top = cTop;
-        peg3Top = bTop;
+        peg2Top = &cTop;
+        peg3Top = &bTop;
     }
 
     print();
 
     while (true) {
         // 1 <--> 2
-        if (!swap(peg1, peg2, peg1Top, peg2Top)) {
+        if (!swap(peg1, peg2, *peg1Top, *peg2Top)) {
             break;
         }
 
         print();
 
         // 1 <--> 3
-        if (!swap(peg1, peg3, peg1Top, peg3Top)) {
+        if (!swap(peg1, peg3, *peg1Top, *peg3Top)) {
             break;
         }
 
         print();
 
         // 2 <--> 3
-        if (!swap(peg2, peg3, peg2Top, peg3Top)) {
+        if (!swap(peg2, peg3, *peg2Top, *peg3Top)) {
             break;
         }
 
@@ -91,32 +92,27 @@ void Hanoi::print() {
 #ifdef PRINT
     std::cout << "--------------------" << std::endl;
 
-    for (ssize_t index = 0; index < 100; ++index) {
+    for (ssize_t index = numDisks; index >= 0; --index) {
         if (index > aTop) {
-            break;
+            std::cout << "     ";
         } else {
-            std::cout << (int) *(a + index) << '|';
+            std::cout << std::setfill(' ') << std::setw(5) << (int) *(a + index);
         }
-    }
-    std::cout << std::endl;
 
-    for (ssize_t index = 0; index < 100; ++index) {
         if (index > bTop) {
-            break;
+            std::cout << "     ";
         } else {
-            std::cout << (int) *(b + index) << '|';
+            std::cout << std::setfill(' ') << std::setw(5) << (int) *(b + index);
         }
-    }
-    std::cout << std::endl;
 
-    for (ssize_t index = 0; index < 100; ++index) {
         if (index > cTop) {
-            break;
+            std::cout << "     ";
         } else {
-            std::cout << (int) *(c + index) << '|';
+            std::cout << std::setfill(' ') << std::setw(5) << (int) *(c + index);
         }
+
+        std::cout << std::endl;
     }
-    std::cout << std::endl;
 #endif
 }
 
